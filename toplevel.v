@@ -41,13 +41,15 @@
  *	Top level entity, linking cpu with data and instruction memory.
  */
 
-module top (led);
-	output [7:0]	led;
+module top (led);// , clk);
 
+	output [7:0]	led;
+	// input 			clk;
+
+	wire		clk;
 	wire		clk_proc;
 	wire		data_clk_stall;
 	
-	wire		clk;
 	reg		ENCLKHF		= 1'b1;	// Plock enable
 	reg		CLKHF_POWERUP	= 1'b1;	// Power up the HFOSC circuit
 

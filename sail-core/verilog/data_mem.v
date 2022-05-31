@@ -35,6 +35,8 @@
 */
 
 
+// COMMENT SUBTRACTED SIZE OF INSTRUC MEM FOR VERILOG
+// on FPGA it improves resource usages
 
 //Data cache
 
