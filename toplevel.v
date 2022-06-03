@@ -46,6 +46,7 @@ module top (led);// , clk);
 	output [7:0]	led;
 	// input 			clk;
 
+	wire		clk_hf;
 	wire		clk;
 	wire		clk_proc;
 	wire		data_clk_stall;
@@ -57,11 +58,22 @@ module top (led);// , clk);
 	/*
 	 *	Use the iCE40's hard primitive for the clock source.
 	 */
-	SB_HFOSC #(.CLKHF_DIV("0b11")) OSCInst0 (
+	SB_HFOSC #(.CLKHF_DIV("0b00")) OSCInst0 (
 		.CLKHFEN(ENCLKHF),
 		.CLKHFPU(CLKHF_POWERUP),
-		.CLKHF(clk)
+		.CLKHF(clk_hf)
 	);
+
+	reg[2:0] counter=3'd0;
+	
+ 	always @(posedge clk_hf) begin
+  		counter <= counter + 3'd1;
+  		if(counter>=3'd2) 
+		begin
+ 			counter <= 3'd0;
+  			clk <= ~clk;
+		end
+ 	end
 
 	/*
 	 *	Memory interface
