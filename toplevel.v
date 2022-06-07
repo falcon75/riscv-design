@@ -67,11 +67,13 @@ module top (led);// , clk);
 	reg[2:0] counter=3'd0;
 	
  	always @(posedge clk_hf) begin
-  		counter <= counter + 3'd1;
   		if(counter>=3'd2) 
 		begin
  			counter <= 3'd0;
   			clk <= ~clk;
+		end
+		else begin
+			counter <= counter + 3'd1;
 		end
  	end
 

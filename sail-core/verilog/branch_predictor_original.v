@@ -71,10 +71,8 @@ module branch_predictor(
 	 *	internal state
 	 */
 	reg [1:0]	s;
-	reg		branch_mem_sig_reg;
 
-    wire positive_offset;
-    assign positive_offset = (offset[31] == 1'b0);
+	reg		branch_mem_sig_reg;
 
 	/*
 	 *	The `initial` statement below uses Yosys's support for nonzero
@@ -108,5 +106,5 @@ module branch_predictor(
 	end
 
 	assign branch_addr = in_addr + offset;
-	assign prediction = (s[1] | ((!s[1]) & s[0] & (!positive_offset))) & branch_decode_sig;
+	assign prediction = s[1] & branch_decode_sig;
 endmodule

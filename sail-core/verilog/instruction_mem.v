@@ -46,13 +46,51 @@ module instruction_memory(addr, out);
 	input [31:0]		addr;
 	output [31:0]		out;
 
+	// reg[31:0] data_in;
+	// reg[13:0] addr;
+	// wire[7:0] WREN;
+	// wire CHIPSELECT;
+	// wire STANDBY;
+	// wire SLEEP;
+	// wire POWEROFF;
+
+
+	// SB_SPRAM256KA  ramfn_inst1(
+	// 	.DATAIN(data_in[31:16]),
+	// 	.ADDRESS(addr[13:0]),
+	// 	.MASKWREN(MASKWREN),
+	// 	.WREN(WREN),
+	// 	.CHIPSELECT(CHIPSELECT),
+	// 	.CLOCK(clk),
+	// 	.STANDBY(STANDBY),
+	// 	.SLEEP(SLEEP),
+	// 	.POWEROFF(POWEROFF),
+	// 	.DATAOUT(out[31:16])
+	// );
+
+	// SB_SPRAM256KA  ramfn_inst2(
+	// 	.DATAIN(data_in[15:0]),
+	// 	.ADDRESS(addr[13:0]),
+	// 	.MASKWREN(MASKWREN),
+	// 	.WREN(WREN),
+	// 	.CHIPSELECT(CHIPSELECT),
+	// 	.CLOCK(clk),
+	// 	.STANDBY(STANDBY),
+	// 	.SLEEP(SLEEP),
+	// 	.POWEROFF(POWEROFF),
+	// 	.DATAOUT(out[15:0])
+	// );
+
+
 	/*
 	 *	Size the instruction memory.
 	 *
 	 *	(Bad practice: The constant should be a `define).
 	 */
-	reg [31:0]		instruction_memory[0:2**12-1];
 
+
+	reg [31:0]		instruction_memory[0:2**12-1];
+	// reg i = 32'b0;
 	/*
 	 *	According to the "iCE40 SPRAM Usage Guide" (TN1314 Version 1.0), page 5:
 	 *
@@ -71,8 +109,29 @@ module instruction_memory(addr, out);
 		/*
 		 *	read from "program.hex" and store the instructions in instruction memory
 		 */
-		$readmemh("verilog/program.hex",instruction_memory);
+		$readmemh("verilog/program.hex", instruction_memory);
+
+
+		// WREN = 1;
+
+		// for (i=32'b0; i < (2**12); i++) begin
+			
+		// 	addr <= i;
+		// 	data_in <= instruction_memory[i];
+
+		// end
+
+		// WREN = 0;
+
+
 	end
 
+
+	// assign addr = addr_in;
+
 	assign out = instruction_memory[addr >> 2];
+
+	// always @(posedge clk) begin
+	// 	out = instruction_memory[addr >> 2];
+	// end
 endmodule
